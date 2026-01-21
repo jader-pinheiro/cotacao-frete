@@ -47,7 +47,7 @@ func (ca *QuoteController) Get(ctx *fiber.Ctx) error {
 // @Param request body requests.RequestQuote  true "Payload com as informações necessárias para realizar a cotação de frete"
 // @Success 201 {object} domain.Quote "Resposta com sucesso"
 // @Failure 400 {object} errorResponse "Erro de requisição inválida"
-// @Router /v1/quotes [post]
+// @Router /v1/quote [post]
 func (ca *QuoteController) Insert(ctx *fiber.Ctx) error {
 	var quotePayload requests.RequestQuote
 	if err := ctx.BodyParser(&quotePayload); err != nil {
@@ -85,7 +85,7 @@ func (ca *QuoteController) Insert(ctx *fiber.Ctx) error {
 // @Param last_quotes query int false "Número de últimas cotações a serem retornadas"
 // @Success 200 {array} domain.Quote "Lista de cotações"
 // @Failure 400 {object} errorResponse "Erro de requisição inválida"
-// @Router /v1/quotes/metrics [get]
+// @Router /v1/quote/metrics [get]
 func (ca *QuoteController) GetResumeQuotes(ctx *fiber.Ctx) error {
 	lastQuotesStr := ctx.Query("last_quotes")
 
