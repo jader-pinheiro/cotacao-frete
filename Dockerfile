@@ -23,7 +23,7 @@ FROM alpine:latest
 WORKDIR /app
 
 # Copia binário compilado
-COPY --from=builder /app/server .+
+COPY --from=builder /app/server .
 
 # Copia a pasta docs gerada pelo swag
 COPY --from=builder /app/docs ./docs
