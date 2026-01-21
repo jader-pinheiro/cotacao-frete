@@ -26,3 +26,4 @@ go.work
 # Project Specific
 /cmd/cotacao-frete/*
 !/cmd/cotacao-frete/.gitKeep
+developer-only/
