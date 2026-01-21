@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:5.6
+    container_name: cotacao-frete-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cotacao_frete_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uuser", "-ppassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  app:
+    container_name: cotacao-frete-app
+    build: .
+    ports:
+      - "9000:3000"   # host 3000 -> container 3000
+    environment:
+      GORM_DSN: "user:password@tcp(db:3306)/cotacao_frete_db?charset=utf8mb4&parseTime=True&loc=Local"
+      COTACAO_CLIENT_ID: "cotacao_frete"
+      COTACAO_CLIENT_SECRET: "JJIz2wlK8qJa36NvSkUjlIeGYeertSrty"
+      LOG_LEVEL: "debug"
+      LOG_CHANNEL: "default"
+      LOG_APPLICATION: "cotacao_frete"
+      LOG_ENV: "dev"
+      LOG_TAGS: "local,cotacao"
+      BASE_URL_QUOTE: "https://sp.freterapido.com"
+      QUOTE_URI: "api/v3/quote/simulate"
+      TZ: "America/Sao_Paulo"
+      HOST: 0.0.0.0
+      PORT: 3000
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: on-failure
+
+volumes:
+  db_data:

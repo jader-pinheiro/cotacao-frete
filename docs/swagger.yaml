@@ -1,0 +1,205 @@
+definitions:
+  domain.CarrierInfo:
+    properties:
+      company_name:
+        type: string
+      id:
+        type: integer
+      logo:
+        type: string
+      name:
+        type: string
+      reference:
+        type: integer
+      registered_number:
+        type: string
+      state_inscription:
+        type: string
+    type: object
+  domain.DeliveryTimeInfo:
+    properties:
+      days:
+        type: integer
+      estimated_date:
+        type: string
+      id:
+        type: integer
+    type: object
+  domain.Dispatcher:
+    properties:
+      createdAt:
+        type: string
+      offers:
+        items:
+          $ref: '#/definitions/domain.Offer'
+        type: array
+      registered_number_dispatcher:
+        type: string
+      registered_number_shipper:
+        type: string
+      request_id:
+        type: string
+      updatedAt:
+        type: string
+      zipcode_origin:
+        type: integer
+    type: object
+  domain.Offer:
+    properties:
+      carrier:
+        $ref: '#/definitions/domain.CarrierInfo'
+      carrier_original_delivery_time:
+        $ref: '#/definitions/domain.DeliveryTimeInfo'
+      cost_price:
+        type: number
+      delivery_time:
+        $ref: '#/definitions/domain.DeliveryTimeInfo'
+      expiration:
+        type: string
+      final_price:
+        type: number
+      home_delivery:
+        type: boolean
+      id:
+        type: integer
+      identifier:
+        type: string
+      modal:
+        type: string
+      offer:
+        type: integer
+      original_delivery_time:
+        $ref: '#/definitions/domain.DeliveryTimeInfo'
+      service:
+        type: string
+      service_code:
+        type: string
+      simulation_type:
+        type: integer
+      weights:
+        $ref: '#/definitions/domain.WeightInfo'
+    type: object
+  domain.Quote:
+    properties:
+      createdAt:
+        type: string
+      dispatchers:
+        items:
+          $ref: '#/definitions/domain.Dispatcher'
+        type: array
+      updatedAt:
+        type: string
+    type: object
+  domain.WeightInfo:
+    properties:
+      id:
+        type: integer
+      real:
+        type: integer
+    type: object
+  requests.RequestQuote:
+    properties:
+      recipient:
+        properties:
+          address:
+            description: dive valida campos internos
+            properties:
+              zipcode:
+                type: string
+            required:
+            - zipcode
+            type: object
+        required:
+        - address
+        type: object
+      volumes:
+        description: dive percorre slice
+        items:
+          properties:
+            amount:
+              type: integer
+            category:
+              type: integer
+            height:
+              type: number
+            length:
+              type: number
+            price:
+              type: integer
+            sku:
+              type: string
+            unitary_weight:
+              type: integer
+            width:
+              type: number
+          required:
+          - amount
+          - category
+          - height
+          - length
+          - price
+          - sku
+          - unitary_weight
+          - width
+          type: object
+        type: array
+    required:
+    - recipient
+    - volumes
+    type: object
+  v1.errorResponse:
+    properties:
+      msg:
+        type: string
+      status:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /v1/quotes:
+    post:
+      parameters:
+      - description: Payload com as informações necessárias para realizar a cotação
+          de frete
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/requests.RequestQuote'
+      responses:
+        "201":
+          description: Resposta com sucesso
+          schema:
+            $ref: '#/definitions/domain.Quote'
+        "400":
+          description: Erro de requisição inválida
+          schema:
+            $ref: '#/definitions/v1.errorResponse'
+      summary: Cotação de Frete
+      tags:
+      - Cotações
+  /v1/quotes/metrics:
+    get:
+      description: Retorna um resumo das cotações, podendo limitar pelo número de
+        últimas cotações
+      parameters:
+      - description: Número de últimas cotações a serem retornadas
+        in: query
+        name: last_quotes
+        type: integer
+      responses:
+        "200":
+          description: Lista de cotações
+          schema:
+            items:
+              $ref: '#/definitions/domain.Quote'
+            type: array
+        "400":
+          description: Erro de requisição inválida
+          schema:
+            $ref: '#/definitions/v1.errorResponse'
+      summary: Resumo Cotação de Frete
+      tags:
+      - Cotações
+swagger: "2.0"

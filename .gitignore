@@ -1,0 +1,28 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Dependencies
+vendor/
+
+# Go workspace
+go.work
+
+# IDEs
+.idea/
+.vscode/
+
+# Environment Variables
+.env
+
+# OS Files
+.DS_Store
+
+# Project Specific
+/cmd/cotacao-frete/*
+!/cmd/cotacao-frete/.gitKeep

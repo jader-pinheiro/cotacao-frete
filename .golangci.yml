@@ -1,0 +1,40 @@
+linters:
+  enable:
+    - bodyclose
+    - containedctx
+    - contextcheck
+    - errname
+    - goimports
+    - noctx
+    - sqlclosecheck
+    - predeclared
+    - sloglint
+    - exhaustive
+    - gosec
+    - govet
+    - nonamedreturns
+    - mnd
+    - nestif
+    - revive
+  presets:
+    - bugs
+    - performance
+    - sql
+    - unused
+  fast: true
+run:
+  timeout: 5m
+  allow-parallel-runners: true
+issues:
+  exclude-files:
+    - ".*\\_test.go$"
+linters-settings:
+  revive:
+    max-open-files: 2048
+    severity: error
+    enable-all-rules: true
+    rules:
+      - name: line-length-limit
+        disabled: true
+      - name: function-length
+        disabled: true
