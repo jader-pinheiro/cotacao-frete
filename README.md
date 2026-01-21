@@ -21,10 +21,11 @@
 
 ## Instalação e Execução
 
-### 1. Clone o repositório: https://cotacao-fretes
+### 1. Clone o repositório:
    ```bash
 
-    $ git clone git@github.com:Superlogica/credito-app-acordo.git
+    $ git clone git@github.com:jader-pinheiro/cotacao-frete.git
+
 
   ```
 ### 2. Execute o comando abaixo na raiz do projeto para construir a imagem e subir os containers:
