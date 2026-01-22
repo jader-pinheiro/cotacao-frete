@@ -76,7 +76,7 @@ func (ca *QuoteController) Insert(ctx *fiber.Ctx) error {
 	if len(req.Dispatchers[0].Offers) == 0 {
 		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"status": fiber.StatusBadRequest,
-			"msg":    "error when requesting to get quote in api Frete Rápido",
+			"msg":    "error when requesting: no offers to get quote in api Frete Rápido",
 		})
 	}
 
