@@ -66,6 +66,20 @@ func (ca *QuoteController) Insert(ctx *fiber.Ctx) error {
 	}
 	req, err := ca.clt.GetQuoteWithPayload(quotePayload)
 
+	if err != nil {
+		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"status": fiber.StatusBadRequest,
+			"msg":    err.Error(),
+		})
+	}
+
+	if len(req.Dispatchers) == 0 {
+		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"status": fiber.StatusBadRequest,
+			"msg":    "error when requesting to get quote in api Frete Rápido",
+		})
+	}
+
 	quote, err := ca.svc.InsertQuote(ctx.UserContext(), req)
 	if err != nil {
 
