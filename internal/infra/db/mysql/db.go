@@ -19,10 +19,8 @@ type Adapter struct {
 }
 
 const (
-	MsgNotFoundRecord   string = "not found record for key: %s"
-	MsgErrGetSettlement string = "failed to get settlement in database error: %v"
-	DefaultBaseDecimal  int    = 10
-	MsgDefaultGetOffice string = "failed to get office in database error: %v"
+	MsgNotFoundRecord string = "not found record for key: %s"
+	MsgErrGetQuotes   string = "failed to get quotes in database error: %v"
 )
 
 func (a *Adapter) Insert(ctx context.Context, quote domain.Quote) (domain.Quote, error) {
@@ -58,7 +56,7 @@ func (a *Adapter) Get(ctx context.Context, key int) (*domain.Quote, error) {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, fmt.Errorf(MsgNotFoundRecord, key)
 		}
-		return nil, fmt.Errorf(MsgErrGetSettlement, err)
+		return nil, fmt.Errorf(MsgErrGetQuotes, err)
 	}
 
 	return &quote, nil

@@ -17,18 +17,6 @@ func replacePlaceholders(message, field, param string) string {
 	return message
 }
 
-func hasNewInstallments(fl validator.FieldLevel) bool {
-	return fl.Field().Len() > 0
-}
-
-func hasValueInstallments(fl validator.FieldLevel) bool {
-	valorStr := fl.Field().Float()
-	if valorStr == float64(0) {
-		return false // Valor não pode estar vazio
-	}
-	return valorStr > float64(0) // O valor deve ser positivo
-}
-
 func checkStruct(e error) string {
 	var messages []string
 	var message string

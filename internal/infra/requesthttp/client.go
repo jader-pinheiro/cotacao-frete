@@ -71,7 +71,6 @@ func (sp *Client) Request(ctx context.Context, method string, path string, body 
 }
 
 func (r *Client) GetQuoteWithPayload(params requests.RequestQuote) (domain.Quote, error) {
-
 	body := mapPayloadToRequestGetQuote(params)
 	req, err := r.Request(context.Background(), "POST", r.quoteURI, body)
 	if err != nil {
