@@ -19,7 +19,7 @@ type Adapter struct {
 }
 
 const (
-	MsgNotFoundRecord string = "not found record for key: %s"
+	MsgNotFoundRecord string = "not found record quotes in database"
 	MsgErrGetQuotes   string = "failed to get quotes in database error: %v"
 )
 
@@ -54,7 +54,7 @@ func (a *Adapter) Get(ctx context.Context, key int) (*domain.Quote, error) {
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, fmt.Errorf(MsgNotFoundRecord, key)
+			return nil, fmt.Errorf(MsgNotFoundRecord)
 		}
 		return nil, fmt.Errorf(MsgErrGetQuotes, err)
 	}
