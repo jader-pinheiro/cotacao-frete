@@ -81,7 +81,6 @@ func (r *Client) GetQuoteWithPayload(params requests.RequestQuote) (domain.Quote
 	res, err := r.client.Do(req)
 
 	if err != nil {
-
 		return domain.Quote{}, err
 	}
 
@@ -99,7 +98,6 @@ func (r *Client) GetQuoteWithPayload(params requests.RequestQuote) (domain.Quote
 
 	if res.StatusCode >= http.StatusBadRequest {
 		return domain.Quote{}, errors.New("error when requesting: bad request (status code: " + res.Status + ")")
-
 	}
 
 	if res.StatusCode == http.StatusForbidden {

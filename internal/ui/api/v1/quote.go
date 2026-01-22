@@ -13,9 +13,8 @@ import (
 )
 
 type QuoteController struct {
-	svc *quote.Service
-	clt *requesthttp.Client
-	//ac   client.Client
+	svc  *quote.Service
+	clt  *requesthttp.Client
 	slog *slog.Logger
 }
 
